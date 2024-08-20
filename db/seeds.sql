@@ -15,9 +15,9 @@ VALUES ('IT Specialist', 70000, 1),
        
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id) 
-VALUES  ('Mark','Smith', 3),
-        ('Marie','Sanderson', 2),
-        ('Ellen','Cooper', 1),
-        ('Matthew','Martin', 4),
-        ('Samantha','Collins', 5),
-        ('Micah','Kline', 6),
+VALUES  ('Mark','Smith', 3, 2),
+        ('Marie','Sanderson', 2, NULL),
+        ('Ellen','Cooper', 1, NULL),
+        ('Matthew','Martin', 4, NULL),
+        ('Samantha','Collins', 5, NULL),
+        ('Micah','Kline', 6, NULL),
