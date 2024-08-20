@@ -20,4 +20,4 @@ VALUES  ('Mark','Smith', 3, 2),
         ('Ellen','Cooper', 1, NULL),
         ('Matthew','Martin', 4, NULL),
         ('Samantha','Collins', 5, NULL),
-        ('Micah','Kline', 6, NULL),
+        ('Micah','Kline', 6, NULL)
