@@ -91,7 +91,7 @@ function addRole() {
 function addEmployee() {
    pool.query(`SELECT r.id, r.title, r.salary FROM roles as r;`, (err, { rows }) => { console.log(rows);
       const role = rows.map(roles => {
-         return { value: roles.id, name: roles.title, salary: roles.salary }
+         return { value: roles.id, name: roles.title, salary: roles.salary};
       })
       inquirer.prompt([
          {
@@ -114,14 +114,15 @@ function addEmployee() {
             type: 'list',
             name: 'manager_id',
             message: `Who is this employee's manager? (Enter null if they are a manager)`,
-            choices: employees
+            choices: employees, null
          }
-      ])
-      .then(({ first_name, last_name, role_id, manager_id }) => {
+      ]).then(({ first_name, last_name, role_id, manager_id }) => {
          console.log({ first_name, last_name, role_id, manager_id });
          pool.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4)`, [first_name, last_name, role_id, manager_id], (err, result) => {
             console.log('Employee Added!');
-            init();})})
+            init();
+         });
+      });
    })
    
    // Query for managers (run a query that looks for employees where the manager_id is NULL)
