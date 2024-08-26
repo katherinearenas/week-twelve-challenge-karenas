@@ -1,4 +1,5 @@
-INSERT INTO department (name)
+-- Active: 1723505728050@@127.0.0.1@5432@jobs_db
+INSERT INTO department (department_name)
 VALUES ('IT'),
        ('Legal'),
        ('Marketing'),
