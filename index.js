@@ -129,8 +129,6 @@ function addEmployee() {
       });
    })
    })
-   
-   // Query for managers (run a query that looks for employees where the manager_id is NULL)
 }
 
  function addDepartment() {
@@ -146,23 +144,36 @@ function addEmployee() {
       });
       })
    }
-// addDepartment();
-
-// async function addRole() {
-//     let newRole = await inquirer.prompt(
-//     {
-//         type: 'input',
-//         name: 'title',
-//         message: 'What role are you adding?'
-//     },
-//     {
-//         type:'input',
-//         name:'salary',
-//         message: 'What is the salary?'
-//     },
-//     {
-//         type: 'list',
-//         choice:
-//     }
-// )
-// }
+function updateEmployee(){
+   pool.query(`SELECT r.id, r.title, r.salary FROM roles as r;`, (err, { rows }) => { console.log(rows);
+      const role = rows.map(roles => {
+         return { value: roles.id, name: roles.title, salary: roles.salary};
+      });
+   pool.query(`SELECT e.id, e.first_name, e.last_name, e.role_id FROM employees AS e;`, (err, { rows }) => { console.log(rows);
+      const employees = rows.map(employees => {
+         return { value: employees.id, name: `${employees.first_name} ${employees.last_name}`}}
+      );
+      inquirer.prompt([
+         {
+            type: 'list',
+            name: 'employee_id',
+            message: `Which employee would you like to update?`,
+            choices: employees
+         },
+         {
+            type: 'list',
+            name: 'role_id',
+            message: `What is this employee's new role?`,
+            choices: role
+         }
+      ]).then(({ employee_id, role_id }) => {
+         console.log({ employee_id, role_id});
+         pool.query(`UPDATE employees SET employees.role_id WHERE id = ${employee_id} ;`, [employee_id, role_id], 
+            (err, result) => {
+            console.log('Employee Updated!');
+            init();
+         });
+      });
+   })
+   })
+}
