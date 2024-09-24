@@ -1,10 +1,10 @@
--- Active: 1723505728050@@127.0.0.1@5432@jobs_db
+-- Active: 1723505728050@@127.0.0.1@5432@jobs_db@public
 DROP DATABASE IF EXISTS jobs_db;
 CREATE DATABASE jobs_db;
 
 \c jobs_db;
 
-CREATE TABLE department (
+CREATE TABLE departments (
   id SERIAL PRIMARY KEY,
   department_name VARCHAR(30) UNIQUE NOT NULL
 );
@@ -15,7 +15,7 @@ CREATE TABLE roles (
   salary DECIMAL NOT NULL,
   department_id INTEGER NOT NULL,
   FOREIGN KEY (department_id)
-  REFERENCES department(id)
+  REFERENCES departments(id)
   ON DELETE SET NULL
 );
 

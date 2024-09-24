@@ -34,7 +34,7 @@ function init() {
 }
 
 function viewAllDepartments() {
-   pool.query(`SELECT * FROM department;`, (err, { rows }) => {
+   pool.query(`SELECT * FROM departments;`, (err, { rows }) => {
      console.table(rows);
      init();
   })
@@ -55,10 +55,10 @@ function viewAllRoles() {
 }
 
 function addRole() {
-   pool.query(`SELECT d.id, d.department_name FROM department as d;`, (err, { rows }) => {
+   pool.query(`SELECT d.id, d.department_name FROM departments as d;`, (err, { rows }) => {
       console.log(rows);
-      const departments = rows.map(department => {
-         return { value: department.id, name: department.department_name}; // { value: 1, name: 'IT'}
+      const departments = rows.map(departments => {
+         return { value: departments.id, name: departments.department_name}; // { value: 1, name: 'IT'}
       })
       inquirer.prompt([
          {
@@ -92,7 +92,11 @@ function addEmployee() {
    pool.query(`SELECT r.id, r.title, r.salary FROM roles as r;`, (err, { rows }) => { console.log(rows);
       const role = rows.map(roles => {
          return { value: roles.id, name: roles.title, salary: roles.salary};
-      })
+      });
+   pool.query(`SELECT e.id, e.first_name, e.last_name, e.role_id FROM employees AS e;`, (err, { rows }) => { console.log(rows);
+      const employees = rows.map(employees => {
+         return { value: employees.id, name: `${employees.first_name} ${employees.last_name}`}}
+      );
       inquirer.prompt([
          {
             type: 'input',
@@ -113,8 +117,8 @@ function addEmployee() {
          {
             type: 'list',
             name: 'manager_id',
-            message: `Who is this employee's manager? (Enter null if they are a manager)`,
-            choices: employees, null
+            message: `Who is this employee's manager?`,
+            choices: employees
          }
       ]).then(({ first_name, last_name, role_id, manager_id }) => {
          console.log({ first_name, last_name, role_id, manager_id });
@@ -123,6 +127,7 @@ function addEmployee() {
             init();
          });
       });
+   })
    })
    
    // Query for managers (run a query that looks for employees where the manager_id is NULL)
@@ -136,7 +141,7 @@ function addEmployee() {
         message: 'Enter the name of the new department'
       }
       ]).then(({department_name}) => {console.log(department_name)
-      pool.query(`INSERT INTO department(department_name) VALUES($1)`,[department_name], (err, result) =>  {(console.log(`Department added!`));
+      pool.query(`INSERT INTO departments(department_name) VALUES($1)`,[department_name], (err, result) =>  {(console.log(`Department added!`));
       init();
       });
       })
