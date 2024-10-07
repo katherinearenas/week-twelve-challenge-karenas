@@ -22,5 +22,6 @@ I got help from my TA and a tutor to complete my database
 
 ### Video:
 
+[Recording](https://drive.google.com/file/d/1Z--ofOJOB0VC7rkNbZVbGo5KZvGubx13/view)
 
 
